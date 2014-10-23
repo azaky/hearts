@@ -45,10 +45,38 @@ input {
 			<h5 id="pass-to">Pass Left</h5>
 			<table class="table">
 				<thead>
-					<td><input id="p1-subscore" class="subscore input-lg" type="number" min="0" max="26" value="0"></input></td>
-					<td><input id="p2-subscore" class="subscore input-lg" type="number" min="0" max="26" value="0"></input></td>
-					<td><input id="p3-subscore" class="subscore input-lg" type="number" min="0" max="26" value="0"></input></td>
-					<td><input id="p4-subscore" class="subscore input-lg" type="number" min="0" max="26" value="0"></input></td>
+					<td>
+						<div class="input-group input-group-lg">
+							<input id="p1-subscore" class="subscore form-control input-lg" type="number" min="0" max="26" value="0"></input>
+							<span class="input-group-btn">
+								<button title="sisanya" class="btn btn-default" type="button" id="p1-autoscore"><strong>!</strong></button>
+							</span>
+						</div>
+					</td>
+					<td>
+						<div class="input-group input-group-lg">
+							<input id="p2-subscore" class="subscore form-control input-lg" type="number" min="0" max="26" value="0"></input>
+							<span class="input-group-btn">
+								<button title="sisanya" class="btn btn-default" type="button" id="p2-autoscore"><strong>!</strong></button>
+							</span>
+						</div>
+					</td>
+					<td>
+						<div class="input-group input-group-lg">
+							<input id="p3-subscore" class="subscore form-control input-lg" type="number" min="0" max="26" value="0"></input>
+							<span class="input-group-btn">
+								<button title="sisanya" class="btn btn-default" type="button" id="p3-autoscore"><strong>!</strong></button>
+							</span>
+						</div>
+					</td>
+					<td>
+						<div class="input-group input-group-lg">
+							<input id="p4-subscore" class="subscore form-control input-lg" type="number" min="0" max="26" value="0"></input>
+							<span class="input-group-btn">
+								<button title="sisanya" class="btn btn-default" type="button" id="p4-autoscore"><strong>!</strong></button>
+							</span>
+						</div>
+					</td>
 				</thead>
 				<tbody>
 					<td colspan="4">
@@ -106,7 +134,8 @@ $(document).ready(function() {
 	});
 	$('#submit-score').on('click', function() {
 		if ($(this).html() == "Submit!") {
-			subscore = [0, $('#p1-subscore').val(),
+			subscore = [0,
+				$('#p1-subscore').val(),
 				$('#p2-subscore').val(),
 				$('#p3-subscore').val(),
 				$('#p4-subscore').val()];
@@ -215,6 +244,28 @@ $(document).ready(function() {
 		if (key.which == 13) {
 			$('#submit-score').click();
 		}
+	});
+	autoscore = function(id) {
+		sum = 0;
+		for (var i = 1; i <= 4; i++) {
+			subscore = parseInt($('#p'+i+'-subscore').val());
+			if (i != id) {
+				sum += subscore;
+			}
+		}
+		$('#p'+id+'-subscore').val(26 - sum);
+	}
+	$('#p1-autoscore').on('click', function() {
+		autoscore(1);
+	});
+	$('#p2-autoscore').on('click', function() {
+		autoscore(2);
+	});
+	$('#p3-autoscore').on('click', function() {
+		autoscore(3);
+	});
+	$('#p4-autoscore').on('click', function() {
+		autoscore(4);
 	});
 	$('#show-details').on('click', function() {
 		modal = $('#modal-details');
